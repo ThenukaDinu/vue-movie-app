@@ -1,12 +1,15 @@
 import Vue from 'vue';
-import VueRouter from 'vue-router'
+import VueRouter from 'vue-router';
+import LatestMovie from '@/components/LatestMovie';
 
-Vue.use(VueRouter)
+Vue.use(VueRouter);
 
 export default new VueRouter({
-    routers: [
-        {
-            
-        }
-    ]
-})
+  routers: [
+    {
+      path: '/',
+      name: 'LatestMovie',
+      component: LatestMovie,
+    },
+  ],
+});
