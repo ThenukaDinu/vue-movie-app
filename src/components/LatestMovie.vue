@@ -31,7 +31,7 @@
 </template>
 
 <script>
-import axios from "axios";
+import MovieApi from "../services/MovieApi";
 
 export default {
   data() {
@@ -41,12 +41,9 @@ export default {
     };
   },
   mounted() {
-    axios
-      .get(
-        "http://www.omdbapi.com/?s=indiana&apikey=b984e58e&page=1&type=movie&Content-Type=application/json"
-      )
+    MovieApi.fetchMovieCollection("indiana")
       .then(response => {
-        this.wholeResponse = response.data.Search;
+        this.wholeResponse = response.Search;
         this.loading = false;
       })
       .catch(error => {

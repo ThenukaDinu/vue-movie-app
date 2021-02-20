@@ -83,7 +83,8 @@
 </template>
 
 <script>
-import axios from "axios";
+import MovieApi from "../services/MovieApi";
+
 export default {
   props: ["id"],
   data() {
@@ -91,21 +92,18 @@ export default {
       singleMovie: "",
       dialog: false,
       loading: true,
-      actors: []
+      actors: [],
+      ratings: ""
     };
   },
   mounted() {
-    axios
-      .get(
-        "http://www.omdbapi.com/?apikey=b984e58e&i=" +
-          this.id +
-          "&Content-Type=application/json"
-      )
+    MovieApi.fetchSingleMovie(this.id)
       .then(response => {
-        this.singleMovie = response.data;
-        this.actors = response.data.Actors.split(",");
+        this.singleMovie = response;
+        this.actors = this.singleMovie.Actors.split(",");
+        this.ratings = this.singleMovie.Ratings;
         this.loading = false;
-        console.log(response.data);
+        console.log(this.singleMovie);
       })
       .catch(error => {
         console.log(error);

@@ -29,7 +29,7 @@
 
             <v-card-actions>
               <v-btn rounded color="green" @click="singleMovie(item.imdbID)">View</v-btn>
-              <v-btn rounded color="green">Visit Site</v-btn>
+              <v-btn rounded color="green" @click="redirectToIMDB(item.imdbID)">Visit Site</v-btn>
             </v-card-actions>
           </v-card>
         </v-flex>
@@ -39,7 +39,7 @@
 </template>
 
 <script>
-import axios from "axios";
+import MovieApi from "../services/MovieApi";
 
 export default {
   props: ["name"],
@@ -55,16 +55,10 @@ export default {
       this.$router.push("/movie/" + id);
     },
     fetchResult(value) {
-      const url =
-        "http://www.omdbapi.com/?apikey=b984e58e&Content-Type=application/json" +
-        "&s=" +
-        value;
-
-      axios
-        .get(url)
+      MovieApi.fetchMovieCollection(value)
         .then(response => {
-          if (response.data.Response === "True") {
-            this.movieResponse = response.data.Search;
+          if (response.Response === "True") {
+            this.movieResponse = response.Search;
             this.noData = false;
             this.loading = false;
             return;
@@ -75,6 +69,9 @@ export default {
         .catch(error => {
           console.log(error);
         });
+    },
+    redirectToIMDB(id) {
+      window.open("https://www.imdb.com/title/" + id, "_blank");
     }
   },
   mounted() {
