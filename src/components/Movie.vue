@@ -1,58 +1,84 @@
 <template>
   <v-container>
-    <v-layout row wrap>
+    <v-container v-if="loading">
+      <div class="text-xs-center">
+        <v-progress-circular indeterminate :size="150" :width="8" color="green"></v-progress-circular>
+      </div>
+    </v-container>
+
+    <v-layout row wrap v-else>
       <v-flex xs12>
-        <h2>Welcome to single movie component</h2>
-        <div>{{singleMovie}}</div>
+        <h2>{{ singleMovie.Title }}</h2>
+        <br />
+
+        <v-container>
+          <v-row>
+            <v-col>
+              <v-img :src="singleMovie.Poster" aspect-ratio="1"></v-img>
+            </v-col>
+            <v-col :offset="1">
+              <div>
+                <h2>{{ singleMovie.Title }}</h2>
+                <div>Year: {{ singleMovie.Year }}</div>
+                <div>Type: {{ singleMovie.Type }}</div>
+                <div>IMDB: {{ singleMovie.imdbID }}</div>
+                <div>IMDB Ratings: {{ singleMovie.imdbRating }}</div>
+                <br />
+                <div>
+                  <h3>Actors</h3>
+                  <v-list>
+                    <v-list-item
+                      :dense="true"
+                      v-for="(actor, index) in actors"
+                      :key="index"
+                    >{{actor}}</v-list-item>
+                  </v-list>
+                </div>
+                <div>
+                  <h3>Awards</h3>
+                  <p>{{singleMovie.Awards}}</p>
+                </div>
+                <br />
+                <div>Director: {{singleMovie.Director}}</div>
+                <div>Country: {{singleMovie.Country}}</div>
+                <div>Genre: {{singleMovie.Genre}}</div>
+                <div>Language: {{singleMovie.Language}}</div>
+              </div>
+            </v-col>
+          </v-row>
+        </v-container>
       </v-flex>
     </v-layout>
-    <v-layout row wrap>
+
+    <!-- <v-layout row wrap>
       <v-flex xs12>
         <div class="text-xs-center">
-        <v-dialog
-          v-model="dialog"
-          width="500">
-          <v-btn
-            slot="activator"
-            color="green"
-            dark>
-            View Ratings
-          </v-btn>
-          <v-card>
-            <v-card-title
-              class="headline grey lighten-2"
-              primary-title
-            >
-              Ratings
-            </v-card-title>
-            <v-card-text>
-              <table style="width:100%" border="1" >
-                <tr>
-                  <th>Source</th>
-                  <th>Ratings</th>
-                </tr>
-                <tr v-for="(rating,index) in this.ratings" :key="index">
-                  <td align="center">{{ratings[index].Source}}</td>
-                  <td align="center">{{ratings[index].Value}}</td>
-                </tr>
-              </table>
-            </v-card-text>
-            <v-divider></v-divider>
-            <v-card-actions>
-              <v-spacer></v-spacer>
-              <v-btn
-                color="primary"
-                flat
-                @click="dialog = false"
-              >
-                OK
-              </v-btn>
-            </v-card-actions>
-          </v-card>
-        </v-dialog>
-      </div>
+          <v-dialog v-model="dialog" width="500">
+            <v-btn slot="activator" color="green" dark>View Ratings</v-btn>
+            <v-card>
+              <v-card-title class="headline grey lighten-2" primary-title>Ratings</v-card-title>
+              <v-card-text>
+                <table style="width:100%" border="1">
+                  <tr>
+                    <th>Source</th>
+                    <th>Ratings</th>
+                  </tr>
+                  <tr v-for="(rating,index) in this.ratings" :key="index">
+                    <td align="center">{{ratings[index].Source}}</td>
+                    <td align="center">{{ratings[index].Value}}</td>
+                  </tr>
+                </table>
+              </v-card-text>
+              <v-divider></v-divider>
+              <v-card-actions>
+                <v-spacer></v-spacer>
+                <v-btn color="primary" flat @click="dialog = false">OK</v-btn>
+              </v-card-actions>
+            </v-card>
+          </v-dialog>
+        </div>
       </v-flex>
-    </v-layout>
+    </v-layout>-->
   </v-container>
 </template>
 
@@ -62,16 +88,24 @@ export default {
   props: ["id"],
   data() {
     return {
-      singleMovie: ""
+      singleMovie: "",
+      dialog: false,
+      loading: true,
+      actors: []
     };
   },
   mounted() {
     axios
       .get(
-        "http://www.omdbapi.com/?apikey=b984e58e&i=tt0209163&Content-Type=application/json"
+        "http://www.omdbapi.com/?apikey=b984e58e&i=" +
+          this.id +
+          "&Content-Type=application/json"
       )
       .then(response => {
         this.singleMovie = response.data;
+        this.actors = response.data.Actors.split(",");
+        this.loading = false;
+        console.log(response.data);
       })
       .catch(error => {
         console.log(error);

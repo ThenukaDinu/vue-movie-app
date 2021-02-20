@@ -1,13 +1,13 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 import LatestMovie from '@/components/LatestMovie.vue';
-import Movie from '@/components/Movie.vue'
+import Movie from '@/components/Movie.vue';
 
 Vue.use(VueRouter);
 
 export default new VueRouter({
   mode: 'history',
-  routers: [
+  routes: [
     {
       path: '/',
       name: 'LatestMovie',
@@ -17,7 +17,7 @@ export default new VueRouter({
       path: '/movie/:id',
       name: 'Movie',
       props: true,
-      component: Movie
-    }
+      component: Movie,
+    },
   ],
 });

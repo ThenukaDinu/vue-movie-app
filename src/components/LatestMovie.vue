@@ -10,7 +10,7 @@
       <v-layout wrap>
         <v-flex xs4 v-for="(item, index) in wholeResponse" :key="index" mb-2>
           <v-card>
-            <v-img src="item.Poster" aspect-ratio="1"></v-img>
+            <v-img :src="item.Poster" :aspect-ratio="1"></v-img>
             <v-card-title primary-title>
               <div>
                 <h2>{{ item.Title }}</h2>
@@ -21,7 +21,7 @@
             </v-card-title>
 
             <v-card-actions class="justify-center">
-              <v-btn text color="green" @click="singleMovie(item.imdbID)">View</v-btn>
+              <v-btn color="green" @click="singleMovie(item.imdbID)">View</v-btn>
             </v-card-actions>
           </v-card>
         </v-flex>
@@ -48,7 +48,6 @@ export default {
       .then(response => {
         this.wholeResponse = response.data.Search;
         this.loading = false;
-        console.log(response.data.Search);
       })
       .catch(error => {
         console.log(error);
@@ -56,7 +55,7 @@ export default {
   },
   methods: {
     singleMovie(id) {
-      this.$router.push("movie/" + id);
+      this.$router.push("/movie/" + id);
     }
   }
 };
