@@ -44,41 +44,44 @@
                 <div>Genre: {{singleMovie.Genre}}</div>
                 <div>Language: {{singleMovie.Language}}</div>
               </div>
+
+              <div style="margin-top: 50px; padding-left: 15px;">
+                <v-app id="inspire">
+                  <v-row justify="left">
+                    <v-dialog v-model="dialog" width="500">
+                      <template v-slot:activator="{ on, attrs }">
+                        <v-btn color="green" dark v-bind="attrs" v-on="on">View Ratings</v-btn>
+                      </template>
+                      <v-card>
+                        <v-card-title primary-title>
+                          <span class="headline grey lighten-2">Ratings</span>
+                        </v-card-title>
+                        <v-card-text>
+                          <table style="width:100%" border="1">
+                            <tr>
+                              <th>Source</th>
+                              <th>Ratings</th>
+                            </tr>
+                            <tr v-for="(rating,index) in this.ratings" :key="index">
+                              <td align="center">{{ratings[index].Source}}</td>
+                              <td align="center">{{ratings[index].Value}}</td>
+                            </tr>
+                          </table>
+                        </v-card-text>
+                        <v-card-actions>
+                          <v-spacer></v-spacer>
+                          <v-btn color="primary" flat @click="dialog = false">OK</v-btn>
+                        </v-card-actions>
+                      </v-card>
+                    </v-dialog>
+                  </v-row>
+                </v-app>
+              </div>
             </v-col>
           </v-row>
         </v-container>
       </v-flex>
     </v-layout>
-
-    <!-- <v-layout row wrap>
-      <v-flex xs12>
-        <div class="text-xs-center">
-          <v-dialog v-model="dialog" width="500">
-            <v-btn slot="activator" color="green" dark>View Ratings</v-btn>
-            <v-card>
-              <v-card-title class="headline grey lighten-2" primary-title>Ratings</v-card-title>
-              <v-card-text>
-                <table style="width:100%" border="1">
-                  <tr>
-                    <th>Source</th>
-                    <th>Ratings</th>
-                  </tr>
-                  <tr v-for="(rating,index) in this.ratings" :key="index">
-                    <td align="center">{{ratings[index].Source}}</td>
-                    <td align="center">{{ratings[index].Value}}</td>
-                  </tr>
-                </table>
-              </v-card-text>
-              <v-divider></v-divider>
-              <v-card-actions>
-                <v-spacer></v-spacer>
-                <v-btn color="primary" flat @click="dialog = false">OK</v-btn>
-              </v-card-actions>
-            </v-card>
-          </v-dialog>
-        </div>
-      </v-flex>
-    </v-layout>-->
   </v-container>
 </template>
 
@@ -103,7 +106,6 @@ export default {
         this.actors = this.singleMovie.Actors.split(",");
         this.ratings = this.singleMovie.Ratings;
         this.loading = false;
-        console.log(this.singleMovie);
       })
       .catch(error => {
         console.log(error);
