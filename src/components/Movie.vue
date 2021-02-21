@@ -8,6 +8,7 @@
 
     <v-layout row wrap v-else>
       <v-flex xs12>
+        <br>
         <h2>{{ singleMovie.Title }}</h2>
         <br />
 
