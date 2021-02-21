@@ -7,7 +7,7 @@ import axios from 'axios';
 Vue.config.productionTip = false;
 
 axios.defaults.baseURL =
-  'http://www.omdbapi.com/?apikey=b984e58e&type=movie&Content-Type=application/json';
+  'https://www.omdbapi.com/?apikey=b984e58e&type=movie&Content-Type=application/json';
 
 new Vue({
   vuetify,
