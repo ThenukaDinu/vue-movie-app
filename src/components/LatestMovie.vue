@@ -8,7 +8,7 @@
 
     <v-container v-else grid-list-xl>
       <v-layout wrap>
-        <v-flex xs4 v-for="(item, index) in wholeResponse" :key="index" mb-2>
+        <v-flex xs12 md3 xl2 sm6 v-for="(item, index) in wholeResponse" :key="index" mb-2>
           <v-card>
             <v-img :src="item.Poster" :aspect-ratio="1"></v-img>
             <v-card-title primary-title>
@@ -16,7 +16,7 @@
                 <h2>{{ item.Title }}</h2>
                 <div>Year: {{ item.Year }}</div>
                 <div>Type: {{ item.Type }}</div>
-                <div>IMDB: {{ item.imdbID }}</div>
+                <div>IMDB: {{ item.imdbID }}</div> 
               </div>
             </v-card-title>
 
