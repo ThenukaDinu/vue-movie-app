@@ -41,7 +41,7 @@ export default {
     };
   },
   mounted() {
-    MovieApi.fetchMovieCollection("indiana")
+    MovieApi.fetchMovieCollection("harry&potter")
       .then(response => {
         this.wholeResponse = response.Search;
         this.loading = false;
