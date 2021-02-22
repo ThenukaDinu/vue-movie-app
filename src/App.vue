@@ -8,7 +8,11 @@
       </v-toolbar-title>
       <v-spacer></v-spacer>
       <v-flex xs12 sm6 md3 style="margin-top: 17px">
-        <v-text-field label="Movie Name" v-model="searchString"></v-text-field>
+        <v-text-field
+          label="Movie Name"
+          v-model="searchString"
+          v-on:keydown.enter="()=> {dataAvailable ? searchMovie() : ''}"
+        ></v-text-field>
       </v-flex>
       <v-btn text :disabled="!dataAvailable" @click="searchMovie">
         <span class="mr-2">Search</span>
@@ -33,8 +37,7 @@ export default {
   methods: {
     searchMovie() {
       var repacedStr = this.searchString.replace(" ", "&");
-      this.$router.push("/search/" + repacedStr)
-      .catch(() => {});
+      this.$router.push("/search/" + repacedStr).catch(() => {});
       this.searchString = "";
     }
   },
