@@ -1,6 +1,6 @@
 # vue-movie-app
 
-### See [live demo](https://6033b36fc741ec000abdf2d5--angry-lovelace-9f129b.netlify.app/)
+### See [live demo](https://movieman2.netlify.app)
 
 ## Project setup
 ```
